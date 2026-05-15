@@ -1,41 +1,20 @@
-import { google } from 'googleapis';
 import { LeadPayload } from '@/types';
 
-function getAuth() {
-  const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON || '{}');
-
-  return new google.auth.GoogleAuth({
-    credentials,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-  });
-}
-
 export async function appendLeadToSheet(lead: LeadPayload): Promise<void> {
-  const spreadsheetId = process.env.GOOGLE_SHEET_ID;
-  if (!spreadsheetId) throw new Error('GOOGLE_SHEET_ID not configured');
+  const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+  if (!webhookUrl) throw new Error('GOOGLE_SHEETS_WEBHOOK_URL not configured');
 
-  const auth = getAuth();
-  const sheets = google.sheets({ version: 'v4', auth });
-
-  const row = [
-    new Date(lead.timestamp).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
-    lead.name,
-    lead.whatsapp,
-    lead.neighborhood,
-    lead.goal,
-    lead.source,
-    lead.device,
-    lead.utmSource || '',
-    lead.utmMedium || '',
-    lead.utmCampaign || '',
-    lead.page,
-  ];
-
-  await sheets.spreadsheets.values.append({
-    spreadsheetId,
-    range: 'Leads!A:K',
-    valueInputOption: 'USER_ENTERED',
-    insertDataOption: 'INSERT_ROWS',
-    requestBody: { values: [row] },
+  const res = await fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(lead),
   });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    throw new Error(`Apps Script returned ${res.status}: ${text}`);
+  }
+
+  const json = await res.json().catch(() => ({ success: false }));
+  if (!json.success) throw new Error(`Apps Script error: ${json.error ?? 'unknown'}`);
 }
