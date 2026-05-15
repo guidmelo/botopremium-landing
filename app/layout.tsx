@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Analytics } from '@/components/ui/Analytics';
 import { CustomCursor } from '@/components/ui/CustomCursor';
-import { ScrollProgressBar } from '@/components/ui/ScrollProgressBar';
-import { SmoothScrollProvider } from '@/components/ui/SmoothScrollProvider';
 
 export const metadata: Metadata = {
   title: 'BotoPremium · Harmonização Facial Premium',
@@ -82,18 +80,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Grain overlay */}
         <div className="grain-overlay" aria-hidden="true" />
 
-        {/* Scroll progress */}
-        <ScrollProgressBar />
-
         {/* Custom cursor (desktop only) */}
         <div className="hidden md:block">
           <CustomCursor />
         </div>
 
-        {/* Smooth scroll + content */}
-        <SmoothScrollProvider>
-          {children}
-        </SmoothScrollProvider>
+        {children}
       </body>
     </html>
   );
