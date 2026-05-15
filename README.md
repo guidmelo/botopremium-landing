@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BotoPremium — Landing Page Premium
 
-## Getting Started
+Landing page cinematográfica e ultra premium para captação de leads qualificados da BotoPremium, desenvolvida com Next.js 15, Three.js, Framer Motion e integração Google Sheets.
 
-First, run the development server:
+---
+
+## Stack Tecnológica
+
+| Tecnologia | Uso |
+|---|---|
+| Next.js 15 | Framework React com App Router |
+| React 19 | Componentes e hooks |
+| TypeScript | Tipagem estática |
+| TailwindCSS | Estilização utility-first |
+| Framer Motion | Animações declarativas |
+| GSAP + ScrollTrigger | Animações de scroll premium |
+| Lenis | Smooth scroll de alta qualidade |
+| Three.js + R3F | Cena 3D (partículas hero) |
+| Google Sheets API | Integração de leads server-side |
+
+---
+
+## Estrutura do Projeto
+
+```
+botopremium-landing/
+├── app/
+│   ├── layout.tsx          # Layout global + analytics + SEO
+│   ├── page.tsx            # Página principal
+│   ├── globals.css         # Sistema de design
+│   └── api/leads/route.ts  # API segura para Google Sheets
+├── sections/               # Hero, Authority, Procedures, Experience, Testimonials, LeadForm
+├── components/             # UI + Layout components
+├── hooks/                  # useSmoothScroll, useCounter, useMagneticEffect
+├── animations/             # Sistema de variantes Framer Motion
+├── lib/                    # Google Sheets integration
+├── services/               # Serviço de envio de leads
+├── utils/                  # Validação e sanitização
+└── types/                  # Tipagem TypeScript global
+```
+
+---
+
+## Configuração
+
+### 1. Clonar e instalar
+
+```bash
+git clone https://github.com/seu-usuario/botopremium-landing.git
+cd botopremium-landing
+npm install
+```
+
+### 2. Variáveis de ambiente
+
+```bash
+cp .env.example .env.local
+# Edite .env.local com suas credenciais
+```
+
+### 3. Google Sheets
+
+1. Ative a **Google Sheets API** no Google Cloud Console
+2. Crie uma **Service Account** e baixe o JSON de credenciais
+3. Compartilhe a planilha com o e-mail da Service Account (Editor)
+4. A aba deve se chamar **"Leads"** com cabeçalhos:
+   `Timestamp | Nome | WhatsApp | Bairro | Objetivo | Origem | Dispositivo | UTM Source | UTM Medium | UTM Campaign | Página`
+
+### 4. Desenvolvimento
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Acesse http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploy na Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm i -g vercel
+vercel
+```
 
-## Learn More
+Ou importe o repositório no [dashboard da Vercel](https://vercel.com) e configure as variáveis de ambiente.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Paleta de Cores
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Token | Hex | Uso |
+|---|---|---|
+| `obsidian` | `#050505` | Fundo principal |
+| `graphite` | `#1A1A1A` | Fundo secundário |
+| `champagne` | `#D6BE8A` | Cor primária |
+| `gold` | `#C6A769` | Dourado |
+| `warm-white` | `#F7F4EF` | Texto |
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Licença
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Desenvolvido exclusivamente para BotoPremium. Todos os direitos reservados.
